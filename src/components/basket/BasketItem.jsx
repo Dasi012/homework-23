@@ -5,7 +5,7 @@ import { ReactComponent as BasketPlus } from "../../assets/icons/plus.svg";
 import { decrementFood, incrementFood } from "../../store/basket/basketThunk";
 import { useDispatch } from "react-redux";
 import { snackBarAction } from "../../store/snackBar";
-
+ 
 export const BasketItem = ({ title, price, amount, id }) => {
   const dispatch = useDispatch();
 

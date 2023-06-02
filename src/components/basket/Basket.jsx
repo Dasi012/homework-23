@@ -12,8 +12,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getBasket } from "../../store/basket/basketThunk";
 
-// import { snackBarAction } from "../../store/snackBar";f
-
 export const Basket = ({ toggleHandler, toggle }) => {
   const { items } = useSelector((state) => state.basket);
 
@@ -22,22 +20,6 @@ export const Basket = ({ toggleHandler, toggle }) => {
   useEffect(() => {
     dispatch(getBasket());
   }, [dispatch]);
-
-  // function incSuccessHandler() {
-  //   dispatch(snackBarAction.incSuccess());
-  // }
-
-  // function incErrorHandler() {
-  //   dispatch(snackBarAction.incError());
-  // }
-
-  // function decSuccessHandler() {
-  //   dispatch(snackBarAction.decSuccess());
-  // }
-
-  // function decErrorHandler() {
-  //   dispatch(snackBarAction.decError());
-  // }
 
   const totalPrice = items?.reduce(
     (prev, current) => prev + +current.price.toFixed(2) * current.amount,
@@ -58,10 +40,6 @@ export const Basket = ({ toggleHandler, toggle }) => {
                     title={item.title}
                     price={item.price}
                     amount={item.amount}
-                    // incSuccessHandler={incSuccessHandler}
-                    // incErrorHandler={incErrorHandler}
-                    // decSuccessHandler={decSuccessHandler}
-                    // decErrorHandler={decErrorHandler}
                   />
                 )
               );
