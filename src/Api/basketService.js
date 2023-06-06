@@ -1,5 +1,4 @@
 import { axiosInstance } from '../lib/axisios';
-import { BasketItem } from './../components/basket/BasketItem';
 
 export const getBasketRequest = () => {
 	return axiosInstance.get('/basket');
