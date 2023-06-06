@@ -1,64 +1,63 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import { Modal } from "../UI/modal/Modal";
+import styled from 'styled-components';
 
-import styled from "styled-components";
+import { BasketItem } from './BasketItem';
 
-import { BasketItem } from "./BasketItem";
+import { TotalAmount } from './TotalAmount';
 
-import { TotalAmount } from "./TotalAmount";
+import { useDispatch, useSelector } from 'react-redux';
 
-import { useDispatch, useSelector } from "react-redux";
-
-import { getBasket } from "../../store/basket/basketThunk";
+import { getBasket } from '../../store/basket/basketThunk';
+import { Modals } from '../UI/modal/Modal';
 
 export const Basket = ({ toggleHandler, toggle }) => {
-  const { items } = useSelector((state) => state.basket);
+	const { items } = useSelector((state) => state.basket);
 
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getBasket());
-  }, [dispatch]);
+	useEffect(() => {
+		dispatch(getBasket());
+	}, [dispatch]);
 
-  const totalPrice = items?.reduce(
-    (prev, current) => prev + +current.price.toFixed(2) * current.amount,
-    0
-  );
+	const totalPrice = items?.reduce(
+		(prev, current) => prev + +current.price.toFixed(2) * current.amount,
+		0
+	);
 
-  return (
-    <Modal onClick={toggleHandler} toggle={toggle}>
-      <Content>
-        {items?.length ? (
-          <FixedWidthContainer>
-            {items.map((item) => {
-              return (
-                item.amount > 0 && (
-                  <BasketItem
-                    key={item._id}
-                    id={item._id}
-                    title={item.title}
-                    price={item.price}
-                    amount={item.amount}
-                  />
-                )
-              );
-            })}
-          </FixedWidthContainer>
-        ) : null}
-        <TotalAmount toggleHandler={toggleHandler} totalPrice={totalPrice} />
-      </Content>
-    </Modal>
-  );
+	return (
+		<Modals onClick={toggleHandler} toggle={toggle}>
+			<Content>
+				{items?.length ? (
+					<FixedWidthContainer>
+						{items.map((item) => {
+							return (
+								item.amount > 0 && (
+									<BasketItem
+										key={item._id}
+										id={item._id}
+										title={item.title}
+										price={item.price}
+										amount={item.amount}
+									/>
+								)
+							);
+						})}
+					</FixedWidthContainer>
+				) : null}
+				<TotalAmount toggleHandler={toggleHandler} totalPrice={totalPrice} />
+			</Content>
+		</Modals>
+	);
 };
 
 const Content = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 1.5rem 1rem;
+	width: 100%;
+	height: 100%;
+	padding: 1.5rem 1rem;
 `;
 
 const FixedWidthContainer = styled.div`
-  overflow-y: auto;
-  max-height: 260px;
+	overflow-y: auto;
+	max-height: 260px;
 `;

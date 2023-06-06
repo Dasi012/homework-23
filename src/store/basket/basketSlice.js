@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addItem, getBasket } from './basketThunk';
+import {
+	addItem,
+	getBasket,
+	decrementFood,
+	incrementFood,
+} from './basketThunk';
 
 const initialState = {
 	items: [],
@@ -37,6 +42,26 @@ export const basketSlice = createSlice({
 				state.isError = '';
 			})
 			.addCase(addItem.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = action.payload;
+			})
+			.addCase(incrementFood.fulfilled, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(incrementFood.pending, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(incrementFood.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = action.payload;
+			})
+			.addCase(decrementFood.fulfilled, (state) => {
+				state.isLoading = false;
+			})
+			.addCase(decrementFood.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(decrementFood.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = action.payload;
 			});
